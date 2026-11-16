@@ -1,0 +1,53 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class BankAccount {
+protected:
+    string holderName;
+    long accountNumber;
+    float balance;
+
+public:
+    void getDetails() {
+        cout << "Enter account holder name: ";
+        getline(cin, holderName);
+        cout << "Enter account number: ";
+        cin >> accountNumber;
+        cout << "Enter bank balance: ";
+        cin >> balance;
+    }
+
+    void displayDetails() {
+        cout << "\n--- Account details ---" << endl;
+        cout << "Account holder: " << holderName << endl;
+        cout << "Account number: " << accountNumber << endl;
+        cout << "Bank balance: " << balance << endl;
+    }
+};
+
+class SavingsAccount : public BankAccount {
+private:
+    float depositAmount;
+
+public:
+    void deposit() {
+        cout << "Enter deposit amount: ";
+        cin >> depositAmount;
+        balance = balance + depositAmount;
+    }
+
+    void displayBalance() {
+        cout << "Bank balance after deposit: " << balance << endl;
+    }
+};
+
+int main() {
+    SavingsAccount account;
+    account.getDetails();
+    account.displayDetails();
+    account.deposit();
+    account.displayBalance();
+    return 0;
+}
