@@ -1,0 +1,133 @@
+#include <iostream>
+#include <exception>
+using namespace std;
+
+// Base exception class
+class BankException : public exception
+{
+public:
+    const char* what() const noexcept override
+    {
+        return "Banking Error Occurred";
+    }
+};
+
+// Exception for insufficient balance
+class InsufficientBalance : public BankException
+{
+public:
+    const char* what() const noexcept override
+    {
+        return "Error: Insufficient Balance!";
+    }
+};
+
+// Exception for invalid amount
+class InvalidAmount : public BankException
+{
+public:
+    const char* what() const noexcept override
+    {
+        return "Error: Invalid Transaction Amount!";
+    }
+};
+
+// Exception for exceeding withdrawal limit
+class WithdrawalLimit : public BankException
+{
+public:
+    const char* what() const noexcept override
+    {
+        return "Error: Withdrawal Limit Exceeded!";
+    }
+};
+
+class BankAccount
+{
+private:
+    double balance;
+
+public:
+    BankAccount(double b)
+    {
+        balance = b;
+    }
+
+    void withdraw(double amount)
+    {
+        if (amount <= 0)
+            throw InvalidAmount();
+
+        if (amount > 20000)
+            throw WithdrawalLimit();
+
+        if (amount > balance)
+            throw InsufficientBalance();
+
+        balance = balance - amount;
+
+        cout << "Withdrawal Successful!" << endl;
+        cout << "Remaining Balance: Rs. " << balance << endl;
+    }
+
+    void displayBalance()
+    {
+        cout << "Current Balance: Rs. " << balance << endl;
+    }
+};
+
+int main()
+{
+    BankAccount account(15000);
+
+    account.displayBalance();
+
+    // Transaction 1
+    try
+    {
+        cout << "\nTransaction 1: Withdraw Rs. 5000\n";
+        account.withdraw(5000);
+    }
+    catch (const BankException& e)
+    {
+        cout << e.what() << endl;
+    }
+
+    // Transaction 2
+    try
+    {
+        cout << "\nTransaction 2: Withdraw Rs. 20000\n";
+        account.withdraw(20000);
+    }
+    catch (const BankException& e)
+    {
+        cout << e.what() << endl;
+    }
+
+    // Transaction 3
+    try
+    {
+        cout << "\nTransaction 3: Withdraw Rs. 25000\n";
+        account.withdraw(25000);
+    }
+    catch (const BankException& e)
+    {
+        cout << e.what() << endl;
+    }
+
+    // Transaction 4
+    try
+    {
+        cout << "\nTransaction 4: Withdraw Rs. -1000\n";
+        account.withdraw(-1000);
+    }
+    catch (const BankException& e)
+    {
+        cout << e.what() << endl;
+    }
+
+    cout << "\nFinal Account Balance:\n";
+    account.displayBalance();
+
+    return 0;
+}
