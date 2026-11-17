@@ -1,0 +1,47 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+template<class T>
+class stack {
+    T arr[5];
+    int top;
+public:
+    stack() {
+        top = -1; 
+    }
+    void push(T value) { 
+        if (top < 4) {
+            arr[++top] = value;
+        }
+    }
+    void display() {
+        for (int i = top; i >= 0; i--) {
+            cout << arr[i] << " ";
+        }
+        cout << endl;
+    }
+};
+
+int main() {
+    stack<int> s1;
+    stack<float> s2;
+    stack<string> s3;
+    
+    s1.push(10);
+    s1.push(20);
+    s2.push(1.5f);
+    s2.push(2.5f);
+    s3.push("hello");
+    
+    cout << "Integer stack: ";
+    s1.display();
+    
+    cout << "Float stack: ";
+    s2.display();
+    
+    cout << "String stack: ";
+    s3.display();
+    
+    return 0;
+}
