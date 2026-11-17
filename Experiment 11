@@ -1,0 +1,76 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+int main()
+{
+    fstream file;
+
+    // Opening file in read and write mode
+    file.open("students.csv", ios::in | ios::out | ios::trunc);
+
+    if (!file)
+    {
+        cout << "File opening failed!";
+        return 0;
+    }
+
+    // Writing student records
+    file << "RollNo,Name,Marks\n";
+    file << "1,Aarav,85\n";
+    file << "2,Ishita,92\n";
+    file << "3,Rahul,76\n";
+    file << "4,Sneha,88\n";
+
+    cout << "Student records written successfully!\n";
+
+    // Displaying write pointer position
+    cout << "Write Pointer Position: " << file.tellp() << endl;
+
+    // Moving get pointer to beginning
+    file.seekg(0, ios::beg);
+
+    // Reading CSV file
+    cout << "\nReading Student Records:\n";
+
+    string line;
+
+    while (getline(file, line))
+    {
+        cout << line << endl;
+    }
+
+    // Displaying read pointer position
+    cout << "\nRead Pointer Position: " << file.tellg() << endl;
+
+    // Moving put pointer to end of file
+    file.clear();
+    file.seekp(0, ios::end);
+
+    cout << "\nWrite Pointer Before Adding Record: "
+         << file.tellp() << endl;
+
+    // Adding another student record
+    file << "5,Karan,65\n";
+
+    cout << "New student record added successfully!\n";
+
+    cout << "Write Pointer After Adding Record: "
+         << file.tellp() << endl;
+
+    // Reading updated file
+    file.clear();
+    file.seekg(0, ios::beg);
+
+    cout << "\nUpdated Student Records:\n";
+
+    while (getline(file, line))
+    {
+        cout << line << endl;
+    }
+
+    file.close();
+
+    return 0;
+}
