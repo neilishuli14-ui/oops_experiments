@@ -1,0 +1,99 @@
+#include <iostream>
+#include <vector>
+#include <map>
+#include <unordered_map>
+#include <algorithm>
+#include <string>
+using namespace std;
+
+int main()
+{
+    vector<pair<string, int>> students = {
+        {"Aarav", 85},
+        {"Ishita", 92},
+        {"Rahul", 76},
+        {"Sneha", 88},
+        {"Karan", 65}
+    };
+
+    // Display original records
+    cout << "Student Marks Dataset:\n";
+    for (auto s : students)
+    {
+        cout << s.first << " : " << s.second << endl;
+    }
+
+    // Sorting students according to marks
+    sort(students.begin(), students.end(),
+         [](pair<string, int> a, pair<string, int> b)
+         {
+             return a.second > b.second;
+         });
+
+    cout << "\nStudents Sorted by Marks:\n";
+    for (auto s : students)
+    {
+        cout << s.first << " : " << s.second << endl;
+    }
+
+    // Using find_if to find students scoring above 80
+    cout << "\nStudents Scoring Above 80:\n";
+
+    auto it = find_if(students.begin(), students.end(),
+                      [](pair<string, int> s)
+                      {
+                          return s.second > 80;
+                      });
+
+    if (it != students.end())
+        cout << it->first << " : " << it->second << endl;
+
+    // Using map to store student grades
+    map<string, char> grades;
+
+    for (auto s : students)
+    {
+        if (s.second >= 90)
+            grades[s.first] = 'A';
+        else if (s.second >= 80)
+            grades[s.first] = 'B';
+        else if (s.second >= 70)
+            grades[s.first] = 'C';
+        else
+            grades[s.first] = 'D';
+    }
+
+    cout << "\nStudent Grades:\n";
+    for (auto g : grades)
+    {
+        cout << g.first << " : " << g.second << endl;
+    }
+
+    // Using unordered_map to store student marks
+    unordered_map<string, int> marks;
+
+    for (auto s : students)
+        marks[s.first] = s.second;
+
+    cout << "\nSearching for Rahul:\n";
+    if (marks.find("Rahul") != marks.end())
+        cout << "Rahul's Marks: " << marks["Rahul"] << endl;
+    else
+        cout << "Student not found!\n";
+
+    // Using transform to increase marks by 5
+    vector<int> updatedMarks(students.size());
+
+    transform(students.begin(), students.end(),
+              updatedMarks.begin(),
+              [](pair<string, int> s)
+              {
+                  return s.second + 5;
+              });
+
+    cout << "\nMarks After Adding 5 Bonus Marks:\n";
+    for (int m : updatedMarks)
+        cout << m << " ";
+
+    return 0;
+}
