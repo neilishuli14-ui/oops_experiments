@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+
+class shape {
+public:
+    virtual void area() = 0; 
+    virtual ~shape() {}      
+};
+
+class circle : public shape {
+public:
+    void override area() {} // or standard override
+    void area() override {
+        cout << "area of circle= " << 3.14 * 5 * 5 << endl;
+    }
+};
+
+class rectangle : public shape {
+public:
+    void area() override {
+        cout << "Area of rectangle= " << 5 * 9 << endl;
+    }
+};
+
+class Triangle : public shape {
+public:
+    void area() override {
+        cout << "Area of triangle= " << 0.5 * 4 * 9 << endl;
+    }
+};
+
+int main() {
+    circle c;
+    rectangle r;
+    Triangle t;
+
+    c.area();
+    r.area();
+    t.area();
+
+    return 0;
+}
