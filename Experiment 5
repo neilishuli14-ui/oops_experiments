@@ -1,0 +1,53 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Person {
+public:
+    string name;
+    void getPerson() {
+        cout << "Enter name: ";
+        cin >> name;
+    }
+    void showPerson() {
+        cout << "Name: " << name << endl;
+    }
+};
+
+class Student : public Person {
+public:
+    int rollNo;
+    void getStudent() {
+        cout << "Enter roll number: ";
+        cin >> rollNo;
+    }
+    void showStudent() {
+        cout << "Roll Number: " << rollNo << endl;
+    }
+};
+
+class GraduateStudent : public Student {
+public:
+    string researchTopic;
+    void getGraduate() {
+        cout << "Enter research topic: ";
+        cin >> researchTopic;
+    }
+    void showGraduate() {
+        cout << "Research Topic: " << researchTopic << endl;
+    }
+};
+
+int main() {
+    GraduateStudent g;
+    g.getPerson();
+    g.getStudent();
+    g.getGraduate();
+    
+    cout << "\nUniversity Student Details:\n";
+    g.showPerson();
+    g.showStudent();
+    g.showGraduate();
+    
+    return 0;
+}
